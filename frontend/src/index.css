@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar - Minimal & Dark */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d2d2d;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FF6B4A;
+}
+
+/* Card Styling - Matching the image */
+.card {
+    background: #121212;
+    border: 1px solid #1e1e1e;
+    border-radius: 16px;
+    /* Larger radius as seen in image */
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: #2d2d2d;
+    transform: translateY(-2px);
+}
+
+/* Primary Button - Coral Orange */
+.btn-primary {
+    background: #FF6B4A;
+    color: #000000;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #FF8F75;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 74, 0.2);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: transparent;
+    color: #9ca3af;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid #2d2d2d;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    border-color: #FF6B4A;
+    color: #ffffff;
+    background: rgba(255, 107, 74, 0.05);
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+    background: #0a0a0a;
+    border: 1px solid #1e1e1e;
+    color: #ffffff;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #FF6B4A;
+    background: #0f0f0f;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #525252;
+}
+
+/* Gradient Text - Coral to White */
+.gradient-text {
+    background: linear-gradient(135deg, #FF6B4A 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background: rgba(255, 107, 74, 0.1);
+    color: #FF6B4A;
+}
+
+.badge-gray {
+    background: #1e1e1e;
+    color: #9ca3af;
+}
+
+/* Avatar */
+.avatar {
+    border-radius: 50%;
+    background: #1e1e1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #FF6B4A;
+    border: 1px solid #2d2d2d;
+}
+
+/* Loading Dots */
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FF6B4A;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Layout Utilities */
+.sidebar-link-active {
+    color: #FF6B4A;
+    background: rgba(255, 107, 74, 0.08);
+    border-right: 3px solid #FF6B4A;
+}
+
+.icon-btn {
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: #6b7280;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-btn:hover {
+    color: #ffffff;
+    background: #1e1e1e;
+}
