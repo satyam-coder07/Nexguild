@@ -22,16 +22,7 @@ const allowedOrigins = [
     process.env.CLIENT_URL
 ];
 
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-};
+const corsOptions = { origin: '*' };
 
 app.use(cors(corsOptions));
 app.use(express.json());
