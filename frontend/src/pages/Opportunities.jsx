@@ -26,7 +26,7 @@ const Opportunities = () => {
 
     const fetchOpportunities = async () => {
         try {
-            const res = await api.get('/opportunities');
+            const res = await api.get('api/opportunities');
             setOpportunities(res.data);
         } catch (err) {
             console.error(err);
