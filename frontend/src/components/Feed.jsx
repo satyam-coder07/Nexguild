@@ -76,7 +76,7 @@ const Feed = () => {
 
     const handleLike = async (id) => {
         try {
-            const res = await api.put(`/posts/${id}/like`);
+            const res = await api.put(`api/posts/${id}/like`);
             setPosts(posts.map(p => p._id === id ? res.data : p));
         } catch (err) {
             toast.error('Failed to like');
@@ -87,7 +87,7 @@ const Feed = () => {
         if (!commentText.trim()) return;
 
         try {
-            const res = await api.post(`/posts/${postId}/comments`, { text: commentText });
+            const res = await api.post(`api/posts/${postId}/comments`, { text: commentText });
             setPosts(posts.map(p => p._id === postId ? res.data : p));
             setCommentText('');
             toast.success('Comment added!');
