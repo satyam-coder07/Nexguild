@@ -25,7 +25,7 @@ const Projects = () => {
 
     const fetchProjects = async () => {
         try {
-            const res = await api.get(`/projects${searchQuery ? `?search=${searchQuery}` : ''}`);
+            const res = await api.get(`api/projects${searchQuery ? `?search=${searchQuery}` : ''}`);
             setProjects(res.data);
         } catch (err) {
             console.error(err);
