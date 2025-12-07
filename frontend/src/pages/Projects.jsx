@@ -40,11 +40,11 @@ const Projects = () => {
             const data = { ...formData, tags: tagsArray };
 
             if (editingProject) {
-                const res = await api.put(`/projects/${editingProject}`, data);
+                const res = await api.put(`api/projects/${editingProject}`, data);
                 setProjects(projects.map(p => p._id === editingProject ? res.data : p));
                 toast.success('Updated!');
             } else {
-                const res = await api.post('/projects', data);
+                const res = await api.post('api/projects', data);
                 setProjects([res.data, ...projects]);
                 toast.success('Created!');
             }
@@ -72,7 +72,7 @@ const Projects = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this project?')) return;
         try {
-            await api.delete(`/projects/${id}`);
+            await api.delete(`api/projects/${id}`);
             setProjects(projects.filter(p => p._id !== id));
             toast.success('Deleted!');
         } catch (err) {
