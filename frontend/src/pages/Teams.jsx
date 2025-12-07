@@ -22,7 +22,7 @@ const Teams = () => {
 
     const fetchTeams = async () => {
         try {
-            const res = await api.get('/teams');
+            const res = await api.get('api/teams');
             setTeams(res.data);
         } catch (err) {
             console.error(err);
