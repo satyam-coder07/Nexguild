@@ -38,11 +38,11 @@ const Opportunities = () => {
         e.preventDefault();
         try {
             if (editingOpp) {
-                const res = await api.put(`/opportunities/${editingOpp}`, formData);
+                const res = await api.put(`api/opportunities/${editingOpp}`, formData);
                 setOpportunities(opportunities.map(o => o._id === editingOpp ? res.data : o));
                 toast.success('Opportunity updated!');
             } else {
-                const res = await api.post('/opportunities', formData);
+                const res = await api.post('api/opportunities', formData);
                 setOpportunities([res.data, ...opportunities]);
                 toast.success('Opportunity posted!');
             }
@@ -70,7 +70,7 @@ const Opportunities = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this opportunity?')) return;
         try {
-            await api.delete(`/opportunities/${id}`);
+            await api.delete(`api/opportunities/${id}`);
             setOpportunities(opportunities.filter(o => o._id !== id));
             toast.success('Opportunity deleted!');
         } catch (err) {
