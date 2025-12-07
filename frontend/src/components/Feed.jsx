@@ -38,7 +38,7 @@ const Feed = () => {
         if (!newPost.trim()) return;
 
         try {
-            const res = await api.post('/posts', { content: newPost });
+            const res = await api.post('api/posts', { content: newPost });
             setPosts([res.data, ...posts]);
             setNewPost('');
             toast.success('Posted successfully!');
@@ -51,7 +51,7 @@ const Feed = () => {
         if (!editContent.trim()) return;
 
         try {
-            const res = await api.put(`/posts/${postId}`, { content: editContent });
+            const res = await api.put(`api/posts/${postId}`, { content: editContent });
             setPosts(posts.map(p => p._id === postId ? res.data : p));
             setEditingPost(null);
             setEditContent('');
@@ -65,7 +65,7 @@ const Feed = () => {
         if (!window.confirm('Delete this post? This action cannot be undone.')) return;
 
         try {
-            await api.delete(`/posts/${postId}`);
+            await api.delete(`api/posts/${postId}`);
             setPosts(posts.filter(p => p._id !== postId));
             toast.success('Post deleted');
             setShowMenu(null);
