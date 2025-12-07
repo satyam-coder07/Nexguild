@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const passport = require('./config/passport');
 
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -26,7 +25,6 @@ const corsOptions = { origin: '*' };
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(passport.initialize());
 
 // Socket.io Setup
 const io = new Server(server, {
@@ -53,6 +51,8 @@ io.on('connection', (socket) => {
         console.log('User disconnected', socket.id);
     });
 });
+console.log("MONGO_URI = ", process.env.MONGO_URI);
+
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {

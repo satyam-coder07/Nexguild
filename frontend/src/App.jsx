@@ -4,7 +4,6 @@ import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import AuthCallback from './pages/AuthCallback';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Feed from './components/Feed';
@@ -31,7 +30,7 @@ function App() {
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="/auth/callback" element={<AuthCallback />} />
+
 
                         {/* Protected Routes with Layout */}
                         <Route path="/" element={<ProtectedRoute><AppLayout><Feed /></AppLayout></ProtectedRoute>} />

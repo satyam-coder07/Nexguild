@@ -61,13 +61,11 @@ const updateProfile = async (req, res) => {
         const user = await User.findById(req.user.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        const { name, bio, skills, role, github, linkedin } = req.body;
+        const { name, bio, skills, role } = req.body;
 
         user.name = name || user.name;
         user.bio = bio || user.bio;
         user.role = role || user.role;
-        user.github = github || user.github;
-        user.linkedin = linkedin || user.linkedin;
 
         if (skills) {
             // Ensure skills is an array and unique
@@ -84,8 +82,6 @@ const updateProfile = async (req, res) => {
             role: updatedUser.role,
             bio: updatedUser.bio,
             skills: updatedUser.skills,
-            github: updatedUser.github,
-            linkedin: updatedUser.linkedin,
             xp: updatedUser.xp,
             badges: updatedUser.badges,
             token: generateToken(updatedUser._id)

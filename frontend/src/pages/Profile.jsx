@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import api from '../api/axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Edit2, Github, Linkedin, Mail, MapPin, Award, X } from 'lucide-react';
+import { Edit2, Mail, MapPin, Award, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
@@ -16,8 +16,6 @@ const Profile = () => {
         name: '',
         role: '',
         bio: '',
-        github: '',
-        linkedin: '',
         skills: ''
     });
 
@@ -68,8 +66,6 @@ const Profile = () => {
             name: profile.name || '',
             role: profile.role || '',
             bio: profile.bio || '',
-            github: profile.github || '',
-            linkedin: profile.linkedin || '',
             skills: profile.skills ? profile.skills.join(', ') : ''
         });
         setShowModal(true);
@@ -123,18 +119,6 @@ const Profile = () => {
                                 <Mail size={14} />
                                 <span>{profile?.email}</span>
                             </div>
-                            {profile?.github && (
-                                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-accent-blue">
-                                    <Github size={14} />
-                                    <span>GitHub</span>
-                                </a>
-                            )}
-                            {profile?.linkedin && (
-                                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-accent-blue">
-                                    <Linkedin size={14} />
-                                    <span>LinkedIn</span>
-                                </a>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -280,24 +264,6 @@ const Profile = () => {
                                         className="w-full bg-dark-800 border-dark-700 rounded-lg p-2.5 text-sm"
                                         value={formData.skills}
                                         onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-400 mb-1.5">GitHub URL</label>
-                                    <input
-                                        type="url"
-                                        className="w-full bg-dark-800 border-dark-700 rounded-lg p-2.5 text-sm"
-                                        value={formData.github}
-                                        onChange={(e) => setFormData({ ...formData, github: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-400 mb-1.5">LinkedIn URL</label>
-                                    <input
-                                        type="url"
-                                        className="w-full bg-dark-800 border-dark-700 rounded-lg p-2.5 text-sm"
-                                        value={formData.linkedin}
-                                        onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
                                     />
                                 </div>
                                 <button type="submit" className="btn-primary w-full">
