@@ -34,11 +34,11 @@ const Teams = () => {
         e.preventDefault();
         try {
             if (editingTeam) {
-                const res = await api.put(`/teams/${editingTeam}`, formData);
+                const res = await api.put(`api/teams/${editingTeam}`, formData);
                 setTeams(teams.map(t => t._id === editingTeam ? res.data : t));
                 toast.success('Team updated!');
             } else {
-                const res = await api.post('/teams', formData);
+                const res = await api.post('api/teams', formData);
                 setTeams([res.data, ...teams]);
                 toast.success('Team created!');
             }
@@ -63,7 +63,7 @@ const Teams = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this team?')) return;
         try {
-            await api.delete(`/teams/${id}`);
+            await api.delete(`api/teams/${id}`);
             setTeams(teams.filter(t => t._id !== id));
             toast.success('Team deleted!');
         } catch (err) {
