@@ -146,6 +146,36 @@ exports.addComment = async (req, res) => {
 };
 
 // Delete comment from post
+// Update a comment
+exports.updateComment = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const comment = post.comments.id(req.params.commentId);
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        // Check if user owns the comment
+        if (comment.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'Not authorized to update this comment' });
+        }
+
+        comment.text = req.body.text || comment.text;
+        await post.save();
+
+        const populatedPost = await Post.findById(post._id)
+            .populate('user', 'name email avatar')
+            .populate('comments.user', 'name email avatar');
+        res.json(populatedPost);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 exports.deleteComment = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);

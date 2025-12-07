@@ -56,4 +56,55 @@ const getProfile = async (req, res) => {
     }
 };
 
-module.exports = { signup, login, getProfile };
+const updateProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const { name, bio, skills, role, github, linkedin } = req.body;
+
+        user.name = name || user.name;
+        user.bio = bio || user.bio;
+        user.role = role || user.role;
+        user.github = github || user.github;
+        user.linkedin = linkedin || user.linkedin;
+
+        if (skills) {
+            // Ensure skills is an array and unique
+            user.skills = Array.from(new Set(skills));
+        }
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            avatar: updatedUser.avatar,
+            role: updatedUser.role,
+            bio: updatedUser.bio,
+            skills: updatedUser.skills,
+            github: updatedUser.github,
+            linkedin: updatedUser.linkedin,
+            xp: updatedUser.xp,
+            badges: updatedUser.badges,
+            token: generateToken(updatedUser._id)
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const deleteAccount = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        await User.findByIdAndDelete(req.user.id);
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { signup, login, getProfile, updateProfile, deleteAccount };

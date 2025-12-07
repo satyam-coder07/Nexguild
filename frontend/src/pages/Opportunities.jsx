@@ -10,11 +10,11 @@ const Opportunities = () => {
     const [opportunities, setOpportunities] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [editingOpp, setEditingOpp] = useState(null);
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState('All');
     const [formData, setFormData] = useState({
         title: '',
         company: '',
-        type: 'job',
+        type: 'Job',
         description: '',
         link: '',
         location: ''
@@ -48,7 +48,7 @@ const Opportunities = () => {
             }
             setShowModal(false);
             setEditingOpp(null);
-            setFormData({ title: '', company: '', type: 'job', description: '', link: '', location: '' });
+            setFormData({ title: '', company: '', type: 'Job', description: '', link: '', location: '' });
         } catch (err) {
             toast.error(err.response?.data?.message || 'Operation failed');
         }
@@ -78,15 +78,15 @@ const Opportunities = () => {
         }
     };
 
-    const filteredOpportunities = filter === 'all'
+    const filteredOpportunities = filter === 'All'
         ? opportunities
         : opportunities.filter(opp => opp.type === filter);
 
     const getTypeBadge = (type) => {
         const badges = {
-            job: 'badge-cyan',
-            internship: 'badge-blue',
-            hackathon: 'badge-purple'
+            Job: 'badge-cyan',
+            Internship: 'badge-blue',
+            Hackathon: 'badge-purple'
         };
         return badges[type] || 'badge-gray';
     };
@@ -104,15 +104,15 @@ const Opportunities = () => {
                         onChange={(e) => setFilter(e.target.value)}
                         className="bg-dark-800 border-dark-700 rounded-lg px-3 py-2 text-sm"
                     >
-                        <option value="all">All Types</option>
-                        <option value="job">Jobs</option>
-                        <option value="internship">Internships</option>
-                        <option value="hackathon">Hackathons</option>
+                        <option value="All">All Types</option>
+                        <option value="Job">Jobs</option>
+                        <option value="Internship">Internships</option>
+                        <option value="Hackathon">Hackathons</option>
                     </select>
                     <button
                         onClick={() => {
                             setEditingOpp(null);
-                            setFormData({ title: '', company: '', type: 'job', description: '', link: '', location: '' });
+                            setFormData({ title: '', company: '', type: 'Job', description: '', link: '', location: '' });
                             setShowModal(true);
                         }}
                         className="btn-primary flex items-center gap-2 whitespace-nowrap"
@@ -149,7 +149,7 @@ const Opportunities = () => {
                                             <p className="text-accent-purple text-sm font-medium">{opp.company}</p>
                                         </div>
                                     </div>
-                                    {user?.id === opp.poster?._id && (
+                                    {(user?._id === (opp.poster?._id || opp.poster)) && (
                                         <div className="flex gap-1">
                                             <button
                                                 onClick={() => handleEdit(opp)}
@@ -247,9 +247,9 @@ const Opportunities = () => {
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                     >
-                                        <option value="job">Job</option>
-                                        <option value="internship">Internship</option>
-                                        <option value="hackathon">Hackathon</option>
+                                        <option value="Job">Job</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Hackathon">Hackathon</option>
                                     </select>
                                 </div>
                                 <div>

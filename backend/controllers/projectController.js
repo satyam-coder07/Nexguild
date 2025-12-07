@@ -27,7 +27,7 @@ exports.createProject = async (req, res) => {
             tags: req.body.tags || [],
             link: req.body.link,
             image: req.body.image,
-            status: req.body.status || 'active',
+            status: req.body.status || 'Building',
             members: [req.user.id]
         });
 

@@ -16,7 +16,7 @@ const Projects = () => {
         description: '',
         tags: '',
         link: '',
-        status: 'active'
+        status: 'Building'
     });
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Projects = () => {
 
             setShowModal(false);
             setEditingProject(null);
-            setFormData({ title: '', description: '', tags: '', link: '', status: 'active' });
+            setFormData({ title: '', description: '', tags: '', link: '', status: 'Building' });
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed');
         }
@@ -101,7 +101,7 @@ const Projects = () => {
                     <button
                         onClick={() => {
                             setEditingProject(null);
-                            setFormData({ title: '', description: '', tags: '', link: '', status: 'active' });
+                            setFormData({ title: '', description: '', tags: '', link: '', status: 'Building' });
                             setShowModal(true);
                         }}
                         className="btn-primary flex items-center gap-2 whitespace-nowrap"
@@ -129,7 +129,7 @@ const Projects = () => {
                         >
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-base font-semibold text-gray-100 group-hover:text-accent-blue transition">{project.title}</h3>
-                                {user?.id === project.owner?._id && (
+                                {(user?._id === (project.owner?._id || project.owner)) && (
                                     <div className="flex gap-1">
                                         <button
                                             onClick={() => handleEdit(project)}
@@ -248,6 +248,18 @@ const Projects = () => {
                                         value={formData.link}
                                         onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                                     />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="block text-xs font-medium text-gray-400">Status</label>
+                                    <select
+                                        className="w-full bg-dark-800 border-dark-700 rounded-lg p-2.5 text-sm"
+                                        value={formData.status}
+                                        onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                                    >
+                                        <option value="Building">Building</option>
+                                        <option value="Live">Live</option>
+                                        <option value="Hiring">Hiring</option>
+                                    </select>
                                 </div>
                                 <button type="submit" className="btn-primary w-full">
                                     {editingProject ? 'Update' : 'Create'}

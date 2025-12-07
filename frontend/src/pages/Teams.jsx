@@ -108,7 +108,7 @@ const Teams = () => {
                                 <div className="w-12 h-12 avatar text-base">
                                     {team.name.charAt(0)}
                                 </div>
-                                {user?.id === team.leader?._id && (
+                                {(user?._id === (team.leader?._id || team.leader)) && (
                                     <div className="flex gap-1">
                                         <button
                                             onClick={() => handleEdit(team)}

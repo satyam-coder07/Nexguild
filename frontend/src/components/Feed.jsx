@@ -16,6 +16,8 @@ const Feed = () => {
     const [commentingOn, setCommentingOn] = useState(null);
     const [commentText, setCommentText] = useState('');
     const [showMenu, setShowMenu] = useState(null);
+    const [editingComment, setEditingComment] = useState(null);
+    const [editCommentText, setEditCommentText] = useState('');
 
     useEffect(() => {
         fetchPosts();
@@ -93,6 +95,30 @@ const Feed = () => {
             toast.success('Comment added!');
         } catch (err) {
             toast.error('Failed to comment');
+        }
+    };
+
+    const handleDeleteComment = async (postId, commentId) => {
+        if (!window.confirm('Delete comment?')) return;
+        try {
+            const res = await api.delete(`api/posts/${postId}/comments/${commentId}`);
+            setPosts(posts.map(p => p._id === postId ? res.data : p));
+            toast.success('Comment deleted');
+        } catch (err) {
+            toast.error('Failed to delete comment');
+        }
+    };
+
+    const handleUpdateComment = async (postId, commentId) => {
+        if (!editCommentText.trim()) return;
+        try {
+            const res = await api.put(`api/posts/${postId}/comments/${commentId}`, { text: editCommentText });
+            setPosts(posts.map(p => p._id === postId ? res.data : p));
+            setEditingComment(null);
+            setEditCommentText('');
+            toast.success('Comment updated');
+        } catch (err) {
+            toast.error('Failed to update comment');
         }
     };
 
@@ -178,7 +204,7 @@ const Feed = () => {
                                     </div>
                                 </div>
 
-                                {user?.id === post.user?._id && (
+                                {user?._id === post.user?._id && (
                                     <div className="relative">
                                         <button
                                             onClick={() => setShowMenu(showMenu === post._id ? null : post._id)}
@@ -267,12 +293,12 @@ const Feed = () => {
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
                                     onClick={() => handleLike(post._id)}
-                                    className={`flex items-center gap-2 hover:text-brand-primary transition-colors group ${post.likes?.includes(user?.id) ? 'text-brand-primary' : ''
+                                    className={`flex items-center gap-2 hover:text-brand-primary transition-colors group ${post.likes?.includes(user?._id) ? 'text-brand-primary' : ''
                                         }`}
                                 >
                                     <Heart
                                         size={20}
-                                        className={post.likes?.includes(user?.id) ? "fill-current" : "group-hover:stroke-brand-primary"}
+                                        className={post.likes?.includes(user?._id) ? "fill-current" : "group-hover:stroke-brand-primary"}
                                     />
                                     <span className="text-sm font-medium">
                                         {post.likes?.length || 0}
@@ -333,7 +359,7 @@ const Feed = () => {
                                                         key={idx}
                                                         initial={{ opacity: 0, x: -10 }}
                                                         animate={{ opacity: 1, x: 0 }}
-                                                        className="flex gap-3 bg-dark-900/50 p-3 rounded-xl"
+                                                        className="flex gap-3 bg-dark-900/50 p-3 rounded-xl group"
                                                     >
                                                         <div className="w-8 h-8 avatar bg-dark-800 text-xs flex-shrink-0 border border-dark-700">
                                                             {comment.user?.name?.charAt(0) || 'U'}
@@ -347,10 +373,57 @@ const Feed = () => {
                                                                     {getTimeAgo(comment.createdAt)}
                                                                 </span>
                                                             </div>
-                                                            <p className="text-gray-400 text-sm mt-1">
-                                                                {comment.text}
-                                                            </p>
+                                                            {editingComment === comment._id ? (
+                                                                <div className="mt-1">
+                                                                    <input
+                                                                        type="text"
+                                                                        className="w-full bg-dark-800 border-dark-700 rounded-lg px-3 py-1.5 text-sm mb-2"
+                                                                        value={editCommentText}
+                                                                        onChange={(e) => setEditCommentText(e.target.value)}
+                                                                        autoFocus
+                                                                    />
+                                                                    <div className="flex gap-2 justify-end">
+                                                                        <button
+                                                                            onClick={() => setEditingComment(null)}
+                                                                            className="text-xs text-gray-500 hover:text-white"
+                                                                        >
+                                                                            Cancel
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => handleUpdateComment(post._id, comment._id)}
+                                                                            className="text-xs text-brand-primary font-medium"
+                                                                        >
+                                                                            Save
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            ) : (
+                                                                <p className="text-gray-400 text-sm mt-1">
+                                                                    {comment.text}
+                                                                </p>
+                                                            )}
                                                         </div>
+                                                        {(user?._id === comment.user?._id || user?._id === post.user?._id) && (
+                                                            <div className="flex flex-col gap-1 items-center opacity-0 group-hover:opacity-100 transition">
+                                                                {user?._id === comment.user?._id && (
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            setEditingComment(comment._id);
+                                                                            setEditCommentText(comment.text);
+                                                                        }}
+                                                                        className="p-1 text-gray-500 hover:text-blue-400"
+                                                                    >
+                                                                        <Edit2 size={12} />
+                                                                    </button>
+                                                                )}
+                                                                <button
+                                                                    onClick={() => handleDeleteComment(post._id, comment._id)}
+                                                                    className="p-1 text-gray-500 hover:text-red-400"
+                                                                >
+                                                                    <Trash2 size={12} />
+                                                                </button>
+                                                            </div>
+                                                        )}
                                                     </motion.div>
                                                 ))}
                                             </div>

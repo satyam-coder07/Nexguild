@@ -35,7 +35,7 @@ const Chat = () => {
         // Mock messages - implement real message fetching
         setMessages([
             { _id: '1', sender: selectedUser._id, text: 'Hey! How are you?', createdAt: new Date() },
-            { _id: '2', sender: user?.id, text: 'I\'m good! Working on a new project.', createdAt: new Date() },
+            { _id: '2', sender: user?._id, text: 'I\'m good! Working on a new project.', createdAt: new Date() },
             { _id: '3', sender: selectedUser._id, text: 'That sounds great! What tech stack?', createdAt: new Date() },
         ]);
     };
@@ -46,7 +46,7 @@ const Chat = () => {
 
         const message = {
             _id: Date.now().toString(),
-            sender: user?.id,
+            sender: user?._id,
             text: newMessage,
             createdAt: new Date()
         };
@@ -85,8 +85,8 @@ const Chat = () => {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => handleSelectUser(u)}
                             className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition ${selectedUser?._id === u._id
-                                    ? 'bg-accent-blue/10 border border-accent-blue/20'
-                                    : 'hover:bg-dark-800'
+                                ? 'bg-accent-blue/10 border border-accent-blue/20'
+                                : 'hover:bg-dark-800'
                                 }`}
                         >
                             <div className="relative">
@@ -133,14 +133,14 @@ const Chat = () => {
                                     key={msg._id}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className={`flex ${msg.sender === user?.id ? 'justify-end' : 'justify-start'}`}
+                                    className={`flex ${msg.sender === user?._id ? 'justify-end' : 'justify-start'}`}
                                 >
-                                    <div className={`max-w-[70%] ${msg.sender === user?.id
-                                            ? 'bg-accent-blue text-white'
-                                            : 'bg-dark-800 text-gray-200'
+                                    <div className={`max-w-[70%] ${msg.sender === user?._id
+                                        ? 'bg-accent-blue text-white'
+                                        : 'bg-dark-800 text-gray-200'
                                         } rounded-lg px-4 py-2`}>
                                         <p className="text-sm">{msg.text}</p>
-                                        <p className={`text-xs mt-1 ${msg.sender === user?.id ? 'text-blue-100' : 'text-gray-500'
+                                        <p className={`text-xs mt-1 ${msg.sender === user?._id ? 'text-blue-100' : 'text-gray-500'
                                             }`}>
                                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </p>
