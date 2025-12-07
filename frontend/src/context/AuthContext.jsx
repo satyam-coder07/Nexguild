@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            api.get('/auth/profile')
+            api.get('api/auth/profile')
                 .then(res => setUser(res.data))
                 .catch(() => {
                     logout();
