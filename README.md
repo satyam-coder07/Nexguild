@@ -151,3 +151,7 @@ Learning platform integrations (YouTube, Coursera APIs)
 The technology stack used in Nex Guild is flexible and can evolve over time based on new learnings and project requirements.
 Tools or frameworks such as the database, backend, or authentication system may be changed or upgraded in future iterations to improve performance and scalability.
 
+
+Frontend-Url : https://nexguild-smoky.vercel.app/
+
+
